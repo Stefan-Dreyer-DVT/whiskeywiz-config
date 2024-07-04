@@ -1,0 +1,38 @@
+server:
+  port: 4200
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: reviewWhiskeyRoute
+          uri: lb://REVIEW-SERVICE
+          predicates:
+            - Path=/whiskeys/{whiskeyId}/reviews/**
+            - Path=/users/{userId}/collection/**
+          filters:
+            - StripPrefix=0
+          order: 0
+
+        - id: whiskeyRoute
+          uri: lb://WHISKEY-SERVICE
+          predicates:
+            - Path=/whiskeys/**
+          filters:
+            - StripPrefix=0
+          order: 1
+
+        - id: userRoute
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+          filters:
+            - StripPrefix=0
+          order: 2
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: DEBUG
