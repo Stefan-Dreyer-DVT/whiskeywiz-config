@@ -8,18 +8,18 @@ spring:
         - id: reviewWhiskeyRoute
           uri: lb://REVIEW-SERVICE
           predicates:
-            - Path=/whiskeys/{whiskeyId}/reviews/**
+            - Path=/whiskeys/{whiskeyId}/reviews/**,/users/{userId}/collection/**
           filters:
             - StripPrefix=0
           order: 0
 
-        - id: reviewUserRoute
-          uri: lb://REVIEW-SERVICE
-          predicates:
-            - Path=/users/{userId}/collection/**
-          filters:
-            - StripPrefix=0
-          order: 0
+#        - id: reviewUserRoute
+#          uri: lb://REVIEW-SERVICE
+#          predicates:
+#            - Path=/users/{userId}/collection/**
+#          filters:
+#            - StripPrefix=0
+#          order: 0
 
         - id: whiskeyRoute
           uri: lb://WHISKEY-SERVICE
