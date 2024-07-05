@@ -5,7 +5,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: reviewWhiskeyRoute
+        - id: reviewRoute
           uri: lb://REVIEW-SERVICE
           predicates:
             - Path=/whiskeys/{whiskeyId}/reviews/**,/users/{userId}/collection/**
@@ -13,13 +13,13 @@ spring:
             - StripPrefix=0
           order: 0
 
-#        - id: reviewUserRoute
-#          uri: lb://REVIEW-SERVICE
-#          predicates:
-#            - Path=/users/{userId}/collection/**
-#          filters:
-#            - StripPrefix=0
-#          order: 0
+        - id: eventRoute
+          uri: lb://EVENT-SERVICE
+          predicates:
+            - Path=/events/**
+          filters:
+            - StripPrefix=0
+          order: 0
 
         - id: whiskeyRoute
           uri: lb://WHISKEY-SERVICE
